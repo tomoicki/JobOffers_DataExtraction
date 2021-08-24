@@ -1,12 +1,18 @@
-from setuptools import setup
+import setuptools
 
-setup(
+
+setuptools.setup(
     name='JobOffers_DataExtraction',
-    version='final',
-    packages=['utilities'],
+    version='0.0.1',
+    author="TJ",
+    description="A small example package",
     url='https://github.com/tomoicki/JobOffers_DataExtraction/tree/using_requests',
-    license='myown',
-    author='nobody',
-    author_email='none',
-    description='test'
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+    package_dir={"": "src"},
+    packages=setuptools.find_packages(where="src"),
+    python_requires=">=3.6",
 )
