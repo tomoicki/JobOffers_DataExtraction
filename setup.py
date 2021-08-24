@@ -1,24 +1,12 @@
-import setuptools
-from setuptools import find_namespace_packages
+from setuptools import setup
 
-# Load the README file.
-with open(file="README.md", mode="r") as readme_handle:
-    long_description = readme_handle.read()
-
-setuptools.setup(
+setup(
     name='JobOffers_DataExtraction',
     version='0.0.1',
-    author="TJ",
-    description="A small example package",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
-    url='https://github.com/tomoicki/JobOffers_DataExtraction/tree/using_requests',
-    classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
+    packages=['utilities'],
+    install_requires=[
+        'requests == 2.26.0',
+        'pandas == 1.3.2',
+        'joblib == 1.0.1',
     ],
-    package_dir={"": "JobOffers_DataExtraction"},
-    packages=find_namespace_packages(where="utilities"),
-    python_requires=">=3.6",
 )

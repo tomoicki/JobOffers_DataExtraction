@@ -1,0 +1,11 @@
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+JobOffers_DataExtraction.egg-info/PKG-INFO
+JobOffers_DataExtraction.egg-info/SOURCES.txt
+JobOffers_DataExtraction.egg-info/dependency_links.txt
+JobOffers_DataExtraction.egg-info/requires.txt
+JobOffers_DataExtraction.egg-info/top_level.txt
+utilities/__init__.py
+utilities/extraction_functions.py
