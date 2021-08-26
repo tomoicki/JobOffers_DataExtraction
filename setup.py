@@ -12,6 +12,7 @@ setup(
     url='https://github.com/tomoicki/JobOffers_DataExtraction/tree/using_requests',
     packages=["utilities"],
     install_requires=[
+        'wheel',
         'requests == 2.26.0',
         'pandas == 1.3.2',
         'joblib == 1.0.1',
