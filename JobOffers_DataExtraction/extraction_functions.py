@@ -3,22 +3,23 @@ import pandas
 from joblib import Parallel, delayed
 from requests.exceptions import ConnectionError
 import datetime
-import time
 import os
 import json
+
+list_of_failures = []
 
 
 def parse_api(url: str):
     """Initial parse. This one returns json data."""
+    global list_of_failures
     try:
         response = requests.get(url)
         data = response.json()
         return data
     except ConnectionError:
-        s = 10
-        print(f"Retrying with {url} after {s} seconds of sleep")
-        time.sleep(s)
-        parse_api(url)
+        print(f"Url: {url} did not work.")
+        list_of_failures.append(url)
+        return None
 
 
 def get_job_offers(site=None, save_json=False) -> list or None:
@@ -51,7 +52,7 @@ def get_job_offers(site=None, save_json=False) -> list or None:
 def get_job_offer_details_nofluff(job_url: str) -> dict:
     """Function that gets details about job offer for nofluff."""
     job_data = parse_api(job_url)
-    if job_data["status"] != "DOES_NOT_EXIST":
+    if job_data is not None and job_data["status"] != "DOES_NOT_EXIST":
         job_offer_details_dictionary = {"title": job_data["title"],
                                         "company": job_data["company"]["name"],
                                         "location": job_data["location"]["places"],
@@ -72,19 +73,20 @@ def get_job_offer_details_nofluff(job_url: str) -> dict:
 def get_job_offer_details_justjoin(job_url: str) -> dict:
     """Function that gets details about job offer for justjoin."""
     job_data = parse_api(job_url)
-    job_offer_details_dictionary = {"title": job_data["title"],
-                                    "company": job_data["company_name"],
-                                    "location": job_data["city"],
-                                    "company_size": job_data["company_size"],
-                                    "offer_url": job_data["id"],
-                                    "employment_types": job_data["employment_types"],
-                                    "experience": job_data["experience_level"],
-                                    "skills": job_data["skills"],
-                                    "scraped_at": datetime.datetime.now(),
-                                    "expired": 'false',
-                                    "expired_at": " ",
-                                    "jobsite": "justjoin",
-                                    "remote": job_data["remote"]
-                                    }
-    return job_offer_details_dictionary
+    if job_data is not None:
+        job_offer_details_dictionary = {"title": job_data["title"],
+                                        "company": job_data["company_name"],
+                                        "location": job_data["city"],
+                                        "company_size": job_data["company_size"],
+                                        "offer_url": job_data["id"],
+                                        "employment_types": job_data["employment_types"],
+                                        "experience": job_data["experience_level"],
+                                        "skills": job_data["skills"],
+                                        "scraped_at": datetime.datetime.now(),
+                                        "expired": 'false',
+                                        "expired_at": " ",
+                                        "jobsite": "justjoin",
+                                        "remote": job_data["remote"]
+                                        }
+        return job_offer_details_dictionary
 
