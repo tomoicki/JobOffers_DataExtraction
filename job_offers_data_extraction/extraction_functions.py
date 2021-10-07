@@ -22,17 +22,18 @@ def parse_api(url: str):
         return None
 
 
-def get_job_offers(site=None, save_json=False) -> list or None:
-    """Returns either list of all job offers as list of dict or saves it to .json file."""
+def get_job_offers(site: str = 'nofluff' or 'justjoin', save_json: bool = False) -> list or None:
+    """Returns either list of all job offers as list of dict or saves it to .json file.
+    You need to provide kwarg site='justjoin' or site='nofluff'."""
     if site == 'nofluff':
         url = 'https://nofluffjobs.com/api/posting/'
-        filename = os.getcwd()+f'/json/nofluff_{datetime.date.today()}.json'
+        filename = os.getcwd() + f'/json/nofluff_{datetime.date.today()}.json'
         func = get_job_offer_details_nofluff
         data = parse_api(url)
         data = data['postings']
     elif site == 'justjoin':
         url = 'https://justjoin.it/api/offers/'
-        filename = os.getcwd()+f'/json/justjoin_{datetime.date.today()}.json'
+        filename = os.getcwd() + f'/json/justjoin_{datetime.date.today()}.json'
         func = get_job_offer_details_justjoin
         data = parse_api(url)
     else:
@@ -89,4 +90,3 @@ def get_job_offer_details_justjoin(job_url: str) -> dict:
                                         "remote": job_data["remote"]
                                         }
         return job_offer_details_dictionary
-

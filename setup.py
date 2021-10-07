@@ -4,7 +4,7 @@ with open(file="README.md", mode="r") as readme_handle:
     long_description = readme_handle.read()
 
 setup(
-    name='JobOffers_DataExtraction',
+    name='job_offers_data_extraction',
     version='0.0.4',
     description='Job offers scraper for nofluffjobs.com and justjoin.it.',
     long_description=long_description,
@@ -12,8 +12,8 @@ setup(
     packages=find_packages(),
     python_requires=">=3.6",
     install_requires=[
-        'joblib==1.0.1',
-        'pandas==1.3.2',
-        'requests==2.26.0',
+        'joblib~=1.0',
+        'pandas~=1.3',
+        'requests~=2.26',
     ],
 )
